@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      l-output: ${{ steps.run-lint.outputs.* }}
-      ut-output: ${{ steps.run-unit-tests.outputs.* }}
-      e2e-output: ${{ steps.run-e2e-tests.outputs.* }}
+      l-output: ${{ steps.run-lint.outputs.result }}
+      ut-output: ${{ steps.run-unit-tests.outputs.result }}
+      e2e-output: ${{ steps.run-e2e-tests.outputs.result }}
 
     steps:
       - name: Checkout Repo
@@ -33,13 +33,13 @@ jobs:
         id: run-lint
         run: |
           npm run lint
-          echo "lint done" >> "$GITHUB_OUTPUT"
+          echo "result=ok" >> "$GITHUB_OUTPUT"
 
       - name: Run Unit Tests
         id: run-unit-tests
         run: |
           npm run test-ci
-          echo "unit tests done" >> "$GITHUB_OUTPUT"
+          echo "result=ok" >> "$GITHUB_OUTPUT"
 
       - name: Upload Unit Test Artifacts
         uses: actions/upload-artifact@v3
@@ -53,7 +53,7 @@ jobs:
         id: run-e2e-tests
         run: |
           npx playwright test --project=chromium
-          echo "e2e tests done" >> "$GITHUB_OUTPUT"
+          echo "result=ok" >> "$GITHUB_OUTPUT"
 
       - name: Upload E2E Test Artifacts
         uses: actions/upload-artifact@v3
