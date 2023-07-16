@@ -94,9 +94,8 @@ jobs:
       - name: Generate Changelog
         id: changelog
         run: |
-          previousTag=$(git describe --abbrev=0 --tags $(git rev-list --tags --max-count=1))
+          previousTag=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=2 --max-count=1))
           echo "Previous tag: $previousTag"
-          echo "Previous output: $prevOutput"
           changelog=$(git log --pretty=format:"%h %s (%an)" $previousTag..HEAD)
           echo "Changelog: $changelog" >> changelog.txt
 
