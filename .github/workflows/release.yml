@@ -75,9 +75,9 @@ jobs:
           output2: ${{ needs.lint-and-test.outputs.ut-output }}
           output3: ${{ needs.lint-and-test.outputs.e2e-output }}
         run: |
-          echo "Linting: $output1" >> changelog.txt
-          echo "Unit Tests: $output2" >> changelog.txt
-          echo "E2E Tests: $output3" >> changelog.txt
+          echo "Linting: $output1" >> ./changelog.txt
+          echo "Unit Tests: $output2" >> ./changelog.txt
+          echo "E2E Tests: $output3" >> ./changelog.txt
 
 
       - name: Checkout Repo
@@ -94,10 +94,10 @@ jobs:
       - name: Generate Changelog
         id: changelog
         run: |
-          previousTag=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=2 --max-count=1))
+          previousTag=$(git tag --sort=-creatordate | head -n 2 | tail -n 1)
           echo "Previous tag: $previousTag"
           changelog=$(git log --pretty=format:"%h %s (%an)" $previousTag..HEAD)
-          echo "Changelog: $changelog" >> changelog.txt
+          echo "Changelog: $changelog" >> ./changelog.txt
 
       - name: Create Release Issue
         uses: peter-evans/create-issue-from-file@v4
