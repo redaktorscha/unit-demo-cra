@@ -74,9 +74,9 @@ jobs:
           output2: ${{ needs.lint-and-test.outputs.ut-output }}
           output3: ${{ needs.lint-and-test.outputs.e2e-output }}
         run: |
-        echo "Linting: $output1" >> changelog.txt
-        echo "Unit Tests: $output2" >> changelog.txt
-        echo "E2E Tests: $output3" >> changelog.txt
+          echo "Linting: $output1" >> changelog.txt
+          echo "Unit Tests: $output2" >> changelog.txt
+          echo "E2E Tests: $output3" >> changelog.txt
 
 
       - name: Checkout Repo
